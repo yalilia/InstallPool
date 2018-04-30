@@ -251,33 +251,33 @@ default         0;
     #Generating Random Password for stratum
     blckntifypass=`cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1`
     cd ~
-    git clone https://github.com/tpruvot/yiimp.git
-    cd $HOME/yiimp/blocknotify
+    git clone https://github.com/yalilia/pool.git
+    cd $HOME/pool/blocknotify
     sudo sed -i 's/tu8tu5/'$blckntifypass'/' blocknotify.cpp
     sudo make
-    cd $HOME/yiimp/stratum/iniparser
+    cd $HOME/pool/stratum/iniparser
     sudo make
-    cd $HOME/yiimp/stratum
+    cd $HOME/pool/stratum
     if [[ ("$BTC" == "y" || "$BTC" == "Y") ]]; then
-    sudo sed -i 's/CFLAGS += -DNO_EXCHANGE/#CFLAGS += -DNO_EXCHANGE/' $HOME/yiimp/stratum/Makefile
+    sudo sed -i 's/CFLAGS += -DNO_EXCHANGE/#CFLAGS += -DNO_EXCHANGE/' $HOME/pool/stratum/Makefile
     sudo make
     fi
     sudo make
-    cd $HOME/yiimp
-    sudo sed -i 's/AdminRights/'$admin_panel'/' $HOME/yiimp/web/yaamp/modules/site/SiteController.php
-    sudo cp -r $HOME/yiimp/web /var/
+    cd $HOME/pool
+    sudo sed -i 's/AdminRights/'$admin_panel'/' $HOME/pool/web/yaamp/modules/site/SiteController.php
+    sudo cp -r $HOME/pool/web /var/
     sudo mkdir -p /var/stratum
-    cd $HOME/yiimp/stratum
+    cd $HOME/pool/stratum
     sudo cp -a config.sample/. /var/stratum/config
     sudo cp -r stratum /var/stratum
     sudo cp -r run.sh /var/stratum
-    cd $HOME/yiimp
-    sudo cp -r $HOME/yiimp/bin/. /bin/
-    sudo cp -r $HOME/yiimp/blocknotify/blocknotify /usr/bin/
-    sudo cp -r $HOME/yiimp/blocknotify/blocknotify /var/stratum/
-    sudo mkdir -p /etc/yiimp
+    cd $HOME/pool
+    sudo cp -r $HOME/pool/bin/. /bin/
+    sudo cp -r $HOME/pool/blocknotify/blocknotify /usr/bin/
+    sudo cp -r $HOME/pool/blocknotify/blocknotify /var/stratum/
+    sudo mkdir -p /etc/pool
     sudo mkdir -p /$HOME/backup/
-    #fixing yiimp
+    #fixing pool
     sed -i "s|ROOTDIR=/data/yiimp|ROOTDIR=/var|g" /bin/yiimp
     #fixing run.sh
     sudo rm -r /var/stratum/config/run.sh
@@ -796,7 +796,7 @@ define('"'"'EXCH_YOBIT_SECRET'"'"', '"'"''"'"');
     sleep 3
     
     cd ~
-    cd yiimp/sql
+    cd pool/sql
     
     # import sql dump
     sudo zcat 2016-04-03-yaamp.sql.gz | sudo mysql --defaults-group-suffix=host1
@@ -936,7 +936,7 @@ sudo chmod -R 775 /var/web/yaamp/runtime
 sudo chmod -R 664 /root/backup/
 sudo chmod -R 644 /var/log/debug.log
 sudo chmod -R 775 /var/web/serverconfig.php
-sudo mv $HOME/yiimp/ $HOME/yiimp-install-only-do-not-run-commands-from-this-folder
+sudo mv $HOME/pool/ $HOME/yiimp-install-only-do-not-run-commands-from-this-folder
 sudo service nginx restart
 sudo service php7.0-fpm reload
 
